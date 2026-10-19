@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+
+{% block title %}Video Library{% endblock %}
+
+{% block content %}
+<div class="library-header">
+  <div class="library-titles">
+    <h1 class="page-title">Library</h1>
+    <p class="page-subtitle">Browse and stream your transcoded videos</p>
+  </div>
+  <div class="library-actions">
+    <a href="/upload" class="btn btn-primary" id="btn-upload-new">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+        <polyline points="17 8 12 3 7 8"></polyline>
+        <line x1="12" y1="3" x2="12" y2="15"></line>
+      </svg>
+      Upload Video
+    </a>
+  </div>
+</div>
+
+<!-- Alert banner for errors -->
+<div id="library-alert" class="alert hidden" role="alert"></div>
+
+<!-- Loading indicator -->
+<div id="library-loading" class="loading-state">
+  <div class="spinner"></div>
+  <p>Loading library...</p>
+</div>
+
+<!-- Empty library state -->
+<div id="library-empty" class="empty-state hidden">
+  <div class="empty-icon">🎬</div>
+  <h2>No videos uploaded yet</h2>
+  <p>Upload a video file (MP4, MOV, MKV, WebM) to start streaming.</p>
+  <a href="/upload" class="btn btn-primary">Upload First Video</a>
+</div>
+
+<!-- Video cards grid -->
+<div id="library-grid" class="video-grid hidden"></div>
+{% endblock %}
+
+{% block scripts %}
+<script src="/static/js/library.js"></script>
+{% endblock %}

@@ -1,0 +1,78 @@
+{% extends "base.html" %}
+
+{% block title %}{{ video.title }} — STREAM{% endblock %}
+
+{% block content %}
+<div class="watch-container">
+  <div class="watch-header">
+    <a href="/" class="back-link">&larr; Back to Library</a>
+  </div>
+
+  <div class="player-wrapper">
+    <video
+      id="video-player"
+      class="video-player"
+      controls
+      playsinline
+      preload="auto"
+      data-video-id="{{ video.id }}"
+    >
+      <p>Your browser does not support HTML5 video streaming.</p>
+    </video>
+
+    <!-- Error overlay -->
+    <div id="player-error" class="player-overlay hidden">
+      <div class="overlay-content">
+        <div class="overlay-icon">⚠️</div>
+        <h3 id="player-error-title">Playback Error</h3>
+        <p id="player-error-message">Unable to load the requested video stream.</p>
+        <button id="btn-player-retry" class="btn btn-secondary">Retry Playback</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="player-controls-bar">
+    <div class="quality-selector-group">
+      <label for="quality-select">Quality:</label>
+      <select id="quality-select" class="form-select" disabled>
+        <option value="-1">Auto (ABR)</option>
+      </select>
+    </div>
+    <div class="player-metrics">
+      <span class="metric-badge" id="metric-resolution">Res: Detecting...</span>
+      <span class="metric-badge" id="metric-bitrate">Bitrate: -</span>
+      <span class="metric-badge" id="metric-engine">Engine: -</span>
+    </div>
+  </div>
+
+  <div class="video-info-card card">
+    <div class="video-info-main">
+      <h1 class="video-title">{{ video.title }}</h1>
+      <div class="video-tags">
+        <span class="tag tag-status">{{ video.status }}</span>
+        {% if video.width and video.height %}
+        <span class="tag tag-resolution">{{ video.width }}x{{ video.height }}</span>
+        {% endif %}
+        {% if video.duration_seconds %}
+        <span class="tag tag-duration">{{ video.duration_seconds | round(1) }}s</span>
+        {% endif %}
+        {% if video.video_codec %}
+        <span class="tag tag-codec">{{ video.video_codec }}</span>
+        {% endif %}
+      </div>
+    </div>
+
+    <div class="renditions-section">
+      <h3>Available HLS Renditions</h3>
+      <div id="renditions-list" class="renditions-chips">
+        <span class="chip-loading">Loading rendition details...</span>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script src="/static/js/vendor/hls.min.js"></script>
+<script src="/static/js/player.js"></script>
+{% endblock %}

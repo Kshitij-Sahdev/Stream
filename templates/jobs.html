@@ -1,0 +1,81 @@
+{% extends "base.html" %}
+
+{% block title %}Processing Monitor{% endblock %}
+
+{% block content %}
+<div class="monitor-container">
+  <div class="monitor-header">
+    <div class="monitor-titles">
+      <h1 class="page-title">Processing Monitor</h1>
+      <p class="page-subtitle">Inspect real-time background transcoding jobs, FFmpeg health, and encoding metrics.</p>
+    </div>
+    <div class="monitor-health-badge" id="monitor-health">
+      <span class="health-dot" id="health-dot"></span>
+      <span id="health-text">Checking health...</span>
+    </div>
+  </div>
+
+  <div class="card monitor-card">
+    <div class="monitor-toolbar">
+      <h2>Recent Transcoding Jobs</h2>
+      <div class="toolbar-actions">
+        <span class="refresh-indicator" id="refresh-indicator">Auto-refresh: On</span>
+        <button id="btn-manual-refresh" class="btn btn-secondary btn-sm">Refresh Now</button>
+      </div>
+    </div>
+
+    <div id="jobs-loading" class="loading-state">
+      <div class="spinner"></div>
+      <p>Fetching jobs...</p>
+    </div>
+
+    <div id="jobs-empty" class="empty-state hidden">
+      <p>No transcoding jobs recorded yet.</p>
+    </div>
+
+    <div class="table-responsive">
+      <table id="jobs-table" class="data-table hidden">
+        <thead>
+          <tr>
+            <th>Job / Video</th>
+            <th>Status</th>
+            <th>Stage</th>
+            <th>Encode Duration</th>
+            <th>Output Size</th>
+            <th>Created At</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody id="jobs-tbody"></tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- Diagnostic Modal for Failure Logs -->
+  <div id="diagnostic-modal" class="modal-backdrop hidden" role="dialog" aria-modal="true">
+    <div class="modal-card">
+      <div class="modal-header">
+        <h3 id="modal-title">Job Diagnostics</h3>
+        <button id="btn-close-modal" class="btn-icon" aria-label="Close modal">&times;</button>
+      </div>
+      <div class="modal-body">
+        <div class="diag-section">
+          <h4>Error Summary</h4>
+          <p id="modal-error-summary" class="error-text">-</p>
+        </div>
+        <div class="diag-section">
+          <h4>Subprocess Diagnostic Output</h4>
+          <pre id="modal-diagnostic-log" class="code-block"></pre>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button id="btn-modal-done" class="btn btn-secondary">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script src="/static/js/monitor.js"></script>
+{% endblock %}

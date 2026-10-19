@@ -1,0 +1,1 @@
+"""STREAM automated test suite."""
